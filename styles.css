@@ -9,21 +9,20 @@ body {
 
 /* Styling for the map container */
 #map {
-    height: 100vh;
+    height: 80vh; /* Adjusted height to accommodate top scores */
     width: 85%;
-    margin-left: 0;
+    margin: 20px auto;
     position: relative;
-    top: 0;
-    right: 0;
     border-left: 3px solid #007bff;
     z-index: 5;
+    border-radius: 10px;
 }
 
 /* Sidebar styling */
 #sidebar {
     width: 15%;
     height: 100vh;
-    position: relative;
+    position: fixed; /* Adjusted to keep the sidebar fixed on the left side */
     top: 0;
     left: 0;
     background-color: #ffffff;
@@ -42,25 +41,28 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 85%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px auto;
 }
 
 #top-scores h2 {
     color: #007bff;
     font-size: 1.8em;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 #top-scores-list {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 #top-scores-list li {
     font-size: 1.2em;
-    padding: 5px 0;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
 }
 
 #top-scores-list li:last-child {
@@ -201,34 +203,16 @@ a:hover {
 .marker-high-score {
     background-color: #4CAF50 !important; /* Green for high scores */
     color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .marker-medium-score {
     background-color: #FF9800 !important; /* Orange for medium scores */
     color: black;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .marker-low-score {
     background-color: #F44336 !important; /* Red for low scores */
     color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Mobile-specific styles */
