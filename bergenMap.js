@@ -16,8 +16,8 @@ fetch('crags.json')
             // Add each crag to the map as a marker
             var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
-            // Add a click event to open a popup with the crag name and fetch weather data
-            marker.bindPopup(`<b>${crag.name}</b>`).on('click', function() {
+            // Add both 'click' and 'tap' events to ensure compatibility on mobile
+            marker.bindPopup(`<b>${crag.name}</b>`).on('click tap', function() {
                 getWeather(crag.latitude, crag.longitude, crag.name);
             });
         });
