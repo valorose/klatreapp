@@ -58,10 +58,8 @@ function getWeather(lat, lon, cragName, marker) {
                     weatherCondition = "☀️ Sunny";
                     break;
                 case "cloudy":
-                    weatherCondition = "☁️ Cloudy";
-                    break;
                 case "partlycloudy":
-                    weatherCondition = "🌤️ Partly Cloudy";
+                    weatherCondition = "☁️ Cloudy";
                     break;
                 case "lightrain":
                 case "rain":
@@ -86,9 +84,7 @@ function getWeather(lat, lon, cragName, marker) {
             // Weather Condition Score
             if (symbolCode === "clearsky") {
                 score += 3;
-            } else if (symbolCode === "partlycloudy") {
-                score += 2;
-            } else if (symbolCode === "cloudy") {
+            } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
                 score += 2;
             } else {
                 score += 0;
@@ -130,7 +126,7 @@ function getWeather(lat, lon, cragName, marker) {
             } else {
                 markerColor = 'red';
             }
-            marker.setIcon(L.divIcon({ className: `marker-${markerColor}-score` }));
+            marker.setIcon(L.divIcon({ className: `marker-${markerColor}-score`, html: `<div class="marker-icon"></div>` }));
 
             // Create the popup content with emojis and score
             const weatherInfo = `
