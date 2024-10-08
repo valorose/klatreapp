@@ -131,8 +131,6 @@ function getWeather(lat, lon, cragName, marker) {
             });
 
             marker.setIcon(customIcon);
-            
-marker.setIcon(customIcon);
 
 // Create the popup content with emojis and score
 const weatherInfo = `
