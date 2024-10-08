@@ -1,5 +1,3 @@
-// bergenMap.js
-
 // Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
 var map = L.map('map').setView([60.3913, 5.3221], 10);
 
@@ -13,8 +11,16 @@ fetch('crags.json')
     .then(response => response.json())
     .then(crags => {
         crags.forEach(crag => {
-            // Add each crag to the map as a marker
-            var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
+            // Create a custom icon for each marker
+            const customIcon = L.divIcon({
+                className: '',
+                html: '<div class="marker-icon marker-orange"></div>', // Default to orange
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            });
+
+            // Add each crag to the map as a marker with the custom icon
+            var marker = L.marker([crag.latitude, crag.longitude], {icon: customIcon}).addTo(map);
 
             // Add a click event to open a popup with the crag name and fetch weather data
             marker.on('click', function() {
@@ -127,16 +133,16 @@ function getWeather(lat, lon, cragName, marker) {
                 markerColorClass = 'marker-dark-red';
             }
 
-            // Add a class to the marker element to change its appearance based on score
+            // Update the marker icon based on the new score
             const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
-            const customIcon = L.divIcon({
+            const updatedIcon = L.divIcon({
                 className: '',
                 html: iconHtml,
-                iconSize: [25, 41], // Adjust the size as needed
+                iconSize: [25, 41],
                 iconAnchor: [12, 41]
             });
 
-            marker.setIcon(customIcon);
+            marker.setIcon(updatedIcon);
 
             // Create the popup content with emojis and score
             const weatherInfo = `
