@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klatrevær - hvor er det best å klatre i dag?</title>
+    <meta name="description" content="Finn de beste klatreforholdene i Bergen med Klatrevær. Få sanntidsoppdateringer om vær, temperatur og fuktighet for klatrecrags.">
+    <title>Klatrevær - Finn de beste klatreforholdene i Bergen</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
@@ -30,45 +31,78 @@
         .marker-low-score {
             background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png');
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
     <header class="gradient-bg text-white py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Klatrevær</h1>
+            <a href="#" class="text-2xl font-bold hover:text-gray-200 transition duration-300">Klatrevær</a>
             <nav>
-                <a href="#" class="mx-2 hover:underline">Hjem</a>
-                <a href="#map" class="mx-2 hover:underline">Klatrekart</a>
-                <a href="#contact" class="mx-2 hover:underline">Kontakt</a>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:underline">Hjem</a></li>
+                    <li><a href="#map" class="hover:underline">Klatrekart</a></li>
+                    <li><a href="#contact" class="hover:underline">Kontakt</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-8">
-        <section class="mb-12 text-center">
-            <h2 class="text-3xl font-bold mb-4">Hvor er det best å klatre i dag?</h2>
+        <h1 class="sr-only">Klatrevær - Finn de beste klatreforholdene i Bergen</h1>
+        
+        <section class="mb-12 text-center" aria-labelledby="main-heading">
+            <h2 id="main-heading" class="text-3xl font-bold mb-4">Hvor er det best å klatre i dag?</h2>
             <p class="text-xl mb-6">Sjekk forholdene på klatrecrags i Bergen med kartet vårt. Få oppdateringer fra Yr på vær, temperatur, sollys og fuktighet. Finn de beste forholdene i dag.</p>
-            <a href="#map" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <a href="#map" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 inline-block">
                 Utforsk kartet
             </a>
         </section>
 
-        <section id="top-scores" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4">Topp 5 klatrecrags</h2>
-            <ul id="top-scores-list" class="bg-white p-4 rounded shadow">
+        <section id="top-scores" class="mb-12" aria-labelledby="top-scores-heading">
+            <h2 id="top-scores-heading" class="text-2xl font-bold mb-4">Topp 5 klatrecrags</h2>
+            <ul id="top-scores-list" class="bg-white p-4 rounded shadow list-none">
                 <!-- Top scores will be dynamically inserted here -->
             </ul>
         </section>
 
-        <section id="map-section" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4">Interaktivt Klatrekart</h2>
-            <div id="map" class="rounded shadow"></div>
+        <section id="map-section" class="mb-12" aria-labelledby="map-heading">
+            <h2 id="map-heading" class="text-2xl font-bold mb-4">Interaktivt Klatrekart</h2>
+            <div id="map" class="rounded shadow" aria-label="Interaktivt kart over klatresteder i Bergen"></div>
+        </section>
+
+        <section id="legend" class="mb-12" aria-labelledby="legend-heading">
+            <h2 id="legend-heading" class="text-2xl font-bold mb-4">Karttegnforklaring</h2>
+            <ul class="bg-white p-4 rounded shadow list-none">
+                <li class="flex items-center mb-2">
+                    <div class="marker-icon marker-high-score mr-2"></div>
+                    <span>Utmerkede klatreforhold</span>
+                </li>
+                <li class="flex items-center mb-2">
+                    <div class="marker-icon marker-medium-score mr-2"></div>
+                    <span>Gode klatreforhold</span>
+                </li>
+                <li class="flex items-center">
+                    <div class="marker-icon marker-low-score mr-2"></div>
+                    <span>Mindre gunstige klatreforhold</span>
+                </li>
+            </ul>
         </section>
     </main>
 
     <footer class="gradient-bg text-white py-4">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Klatrevær. All Rights Reserved.</p>
+            <p>&copy; 2024 Klatrevær. Alle rettigheter forbeholdt.</p>
             <p class="mt-2">
                 Følg oss på 
                 <a href="#" class="underline hover:text-gray-300 transition duration-300">Instagram</a>!
