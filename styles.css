@@ -1,133 +1,156 @@
-"use client"
-
-import React, { useEffect, useState } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-
-// Ensure Leaflet icons are properly loaded
-import icon from 'leaflet/dist/images/marker-icon.png'
-import iconShadow from 'leaflet/dist/images/marker-shadow.png'
-
-let DefaultIcon = L.icon({
-  iconUrl: icon.src,
-  shadowUrl: iconShadow.src,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-})
-
-L.Marker.prototype.options.icon = DefaultIcon
-
-interface Crag {
-  name: string
-  latitude: number
-  longitude: number
+/* General page styling */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e8f0f2;
+    color: #333;
 }
 
-interface Weather {
-  condition: string
-  temperature: number
-  windSpeed: number
-  humidity: number
+/* Styling for the map container */
+#map {
+    height: 100vh;
+    width: 85%;
+    margin-left: 0;
+    position: relative; /* Changed from fixed to relative */
+    top: 0;
+    right: 0;
+    border-left: 3px solid #007bff;
+    z-index: 5; /* Add z-index to control layering */
 }
 
-export default function BergenCragMap() {
-  const [map, setMap] = useState<L.Map | null>(null)
-  const [selectedCrag, setSelectedCrag] = useState<Crag | null>(null)
-  const [weather, setWeather] = useState<Weather | null>(null)
+/* Sidebar styling */
+#sidebar {
+    width: 15%;
+    height: 100vh;
+    position: relative; /* Changed from fixed to relative */
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    z-index: 10; /* Ensure sidebar stays on top of the map */
+    border-right: 3px solid #007bff;
+}
 
-  useEffect(() => {
-    // Initialize map
-    const mapInstance = L.map('map').setView([60.3913, 5.3221], 10)
+/* Heading styling */
+h1 {
+    text-align: center;
+    color: #007bff;
+    margin-top: 10px;
+    font-size: 2em;
+    letter-spacing: 1px;
+}
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mapInstance)
+/* Crag details styling */
+#crag-details {
+    font-size: 1em;
+    line-height: 1.8;
+    margin-top: 20px;
+}
 
-    setMap(mapInstance)
+/* Styling for crag names */
+.crag-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
 
-    // Load crag data
-    fetch('crags.json')
-      .then(response => response.json())
-      .then((crags: Crag[]) => {
-        crags.forEach(crag => {
-          const marker = L.marker([crag.latitude, crag.longitude]).addTo(mapInstance)
-          marker.on('click', () => {
-            setSelectedCrag(crag)
-            getWeather(crag.latitude, crag.longitude, crag.name)
-          })
-        })
-      })
-      .catch(error => console.error('Error loading crags.json:', error))
+/* Button styling */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
 
-    return () => {
-      mapInstance.remove()
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Add some styling to the links */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Weather condition styling */
+.weather-icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+/* Card styling for weather information */
+.weather-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    #map {
+        width: 100%;
+        position: relative;
+        height: 50vh;
+        margin-left: 0;
     }
-  }, [])
 
-  const getWeather = async (lat: number, lon: number, cragName: string) => {
-    const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}`
-    try {
-      const response = await fetch(apiUrl, {
-        headers: {
-          "User-Agent": "BergenClimbingApp/1.0 (your_email@example.com)"
-        }
-      })
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-      const data = await response.json()
-      const timeseries = data.properties.timeseries
-      if (timeseries && timeseries.length > 0) {
-        const details = timeseries[0].data.instant.details
-        const nextHourData = timeseries[0].data.next_1_hours
-        const symbolCode = nextHourData?.summary?.symbol_code || "cloudy"
-
-        let weatherCondition = "☁️ Cloudy"
-        switch (symbolCode) {
-          case "clearsky": weatherCondition = "☀️ Sunny"; break
-          case "partlycloudy": weatherCondition = "🌤️ Partly Cloudy"; break
-          case "lightrain":
-          case "rain": weatherCondition = "☔ Rainy"; break
-          case "heavyrain": weatherCondition = "🌧️ Heavy Rain"; break
-          case "fog": weatherCondition = "🌫️ Foggy"; break
-          case "snow": weatherCondition = "❄️ Snow"; break
-        }
-
-        setWeather({
-          condition: weatherCondition,
-          temperature: details.air_temperature,
-          windSpeed: details.wind_speed,
-          humidity: details.relative_humidity
-        })
-      }
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-      setWeather(null)
+    #sidebar {
+        width: 100%;
+        height: 50vh;
+        position: relative;
+        top: 50vh;
+        left: 0;
+        padding: 15px;
+        box-shadow: none;
     }
-  }
 
-  return (
-    <div className="flex h-screen">
-      <div id="sidebar" className="w-1/4 p-4 bg-white shadow-lg overflow-y-auto">
-        <h1 className="text-2xl font-bold text-center text-blue-600 mb-4">Bergen Crag Map</h1>
-        {selectedCrag && (
-          <div id="crag-details" className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">{selectedCrag.name}</h2>
-            {weather ? (
-              <div className="weather-card mt-4 p-4 bg-gray-100 rounded-lg">
-                <h3 className="font-semibold mb-2">Current Weather</h3>
-                <p>{weather.condition}</p>
-                <p>🌡️ Temperature: {weather.temperature}°C</p>
-                <p>💨 Wind Speed: {weather.windSpeed} m/s</p>
-                <p>💧 Humidity: {weather.humidity}%</p>
-              </div>
-            ) : (
-              <p>Loading weather data...</p>
-            )}
-          </div>
-        )}
-      </div>
-      <div id="map" className="w-3/4"></div>
-    </div>
-  )
+    #crag-details {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* Animation for sidebar content */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#sidebar {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+/* Updated text content */
+h1:after {
+    content: "Klatrevær - hvor er det best å klatre i dag?";
+}
+
+#crag-details:after {
+    content: "Sjekk klatreforholdene i kartet. Med oppdaterte data fra YR. Oppdateres hele tiden.";
 }
