@@ -132,14 +132,15 @@ function getWeather(lat, lon, cragName, marker) {
 
             marker.setIcon(customIcon);
 
-            // Create the popup content with emojis and score
-            const weatherInfo = `
-                <b>${cragName} (🏅 Score: ${score}/10)</b><br>
-                ${weatherCondition}<br>
-                🌡️ Temperature: ${temperature.toFixed(1)}°C<br>
-                💨 Wind Speed: ${windSpeed.toFixed(1)} m/s<br>
-                💧 Humidity: ${humidity.toFixed(1)}%`;
-
+         // Create the popup content with emojis and score
+const weatherInfo = `
+    <b>${cragName}</b><br>
+    🏅 <strong>Score: ${score}/10</strong><br>
+    ${weatherCondition}<br>
+    🌡️ <strong>Temperature:</strong> ${temperature.toFixed(1)}°C<br>
+    💨 <strong>Wind Speed:</strong> ${windSpeed.toFixed(1)} m/s<br>
+    💧 <strong>Humidity:</strong> ${humidity.toFixed(1)}%`;
+            
             // Show the popup
             marker.bindPopup(weatherInfo).openPopup();
         } else {
