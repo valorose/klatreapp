@@ -1,5 +1,3 @@
-// bergenMap.js
-
 // Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
 var map = L.map('map').setView([60.3913, 5.3221], 10);
 
@@ -43,9 +41,9 @@ function getWeather(lat, lon, cragName, marker) {
         const timeseries = data.properties.timeseries;
         if (timeseries && timeseries.length > 0) {
             const details = timeseries[0].data.instant.details;
-            const temperature = details.air_temperature;
-            const windSpeed = details.wind_speed;
-            const humidity = details.relative_humidity;
+            const temperature = details?.air_temperature ?? "N/A";
+            const windSpeed = details?.wind_speed ?? "N/A";
+            const humidity = details?.relative_humidity ?? "N/A";
 
             // Extract weather symbol from next_1_hours
             const nextHourData = timeseries[0].data.next_1_hours;
@@ -132,22 +130,22 @@ function getWeather(lat, lon, cragName, marker) {
 
             marker.setIcon(customIcon);
 
-// Create the popup content with emojis and score
-const weatherInfo = `
-    <b>${cragName}</b><br>
-    🏅 Score: ${score}/10<br>
-    ${weatherCondition}<br>
-    🌡️ Temperature: ${temperature ? temperature.toFixed(1) : "N/A"}°C<br>
-    💨 Wind Speed: ${windSpeed ? windSpeed.toFixed(1) : "N/A"} m/s<br>
-    💧 Humidity: ${humidity ? humidity.toFixed(1) : "N/A"}%`;
+            // Create the popup content with emojis and score
+            const weatherInfo = `
+                <b>${cragName}</b><br>
+                🏅 Score: ${score}/10<br>
+                ${weatherCondition}<br>
+                🌡️ Temperature: ${temperature !== "N/A" ? temperature.toFixed(1) : "N/A"}°C<br>
+                💨 Wind Speed: ${windSpeed !== "N/A" ? windSpeed.toFixed(1) : "N/A"} m/s<br>
+                💧 Humidity: ${humidity !== "N/A" ? humidity.toFixed(1) : "N/A"}%`;
 
-// Log data to help debug
-console.log('Weather data for:', cragName);
-console.log('Score:', score);
-console.log('Weather Info:', weatherInfo);
+            // Log data to help debug
+            console.log('Weather data for:', cragName);
+            console.log('Score:', score);
+            console.log('Weather Info:', weatherInfo);
 
-// Show the popup
-marker.bindPopup(weatherInfo).openPopup();
+            // Show the popup
+            marker.bindPopup(weatherInfo).openPopup();
         }
     })
     .catch(error => {
