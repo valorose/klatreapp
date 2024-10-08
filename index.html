@@ -9,143 +9,44 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+        /* Existing styles... */
 
-        header {
-            background: linear-gradient(90deg, #0288d1, #03a9f4);
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
+        /* Add these styles for the map icons */
+        .marker-icon {
+            width: 25px !important;
+            height: 41px !important;
+            margin-left: -12px;
+            margin-top: -41px;
         }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background-color: #0277bd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
+        .marker-orange {
+            background-color: orange;
         }
-
-        nav a {
-            color: #fff;
-            margin: 0 20px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
+        .marker-bright-green {
+            background-color: #32CD32;
         }
-
-        nav a:hover {
-            color: #b3e5fc;
-        }
-
-        main {
-            padding: 40px 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        #map {
-            height: 600px;
-            width: 100%;
-            margin-top: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #0288d1;
-            color: #fff;
-            margin-top: 40px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
-        }
-
-        .intro-text {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 5;
-        }
-
-        .intro-text h2 {
-            margin-bottom: 15px;
-            font-size: 2em;
-            color: #0288d1;
-        }
-
-        .intro-text p {
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .explore-button {
-            background-color: #0288d1;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .explore-button:hover {
-            background-color: #0277bd;
+        .marker-dark-red {
+            background-color: #8B0000;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Klatrevær - hvor er det best å klatre i dag?</h1>
-    </header>
-    <nav>
-        <a href="#">Hjem</a>
-        <a href="#map">Klatrekart</a>
-        <a href="#about">Om</a>
-        <a href="#contact">Kontakt</a>
-    </nav>
-    <main>
-        <section class="intro-text">
-            <h2>Oppdag dagens klatreforhold for alle klatrecrags i Bergen med vårt interaktive kart!</h2>
-            <p>Få oppdatert informasjon fra YR om vær, temperatur, solforhold og luftfuktighet. Hold deg informert og finn ut hvor klatreforholdene er best – oppdatert i sanntid.</p>
-            <div class="button-container">
-                <button class="explore-button" onclick="document.getElementById('map').scrollIntoView({ behavior: 'smooth' });">Utforsk kartet</button>
-            </div>
-        </section>
-        <section id="map"></section>
-    </main>
+    <!-- Existing header, nav, and main content... -->
+
     <footer>
         <p>&copy; 2024 Klatrevær. Alle rettigheter reservert.</p>
         <p>Følg oss på <a href="#" style="color: #fff; text-decoration: underline;">Instagram</a> for de siste klatrenyhetene!</p>
     </footer>
+    
     <script src="bergenMap.js"></script>
+    
+    <!-- Add this script to check if the map and markers are being created -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                console.log('Map object:', map);
+                console.log('Number of layers (including markers):', Object.keys(map._layers).length);
+            }, 2000); // Wait 2 seconds to ensure map has loaded
+        });
+    </script>
 </body>
 </html>
