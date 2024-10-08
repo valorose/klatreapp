@@ -35,32 +35,39 @@ function getWeather(lat, lon, cragName) {
     .then(response => response.json())
     .then(data => {
         // Extract weather details
-        const details = data.properties.timeseries[0].data.instant.details;
-        const temperature = details.air_temperature;
-        const windSpeed = details.wind_speed;
-        const humidity = details.relative_humidity;
+        const timeseries = data.properties.timeseries;
+        if (timeseries && timeseries.length > 0) {
+            const details = timeseries[0].data.instant.details;
+            const temperature = details.air_temperature;
+            const windSpeed = details.wind_speed;
+            const humidity = details.relative_humidity;
+            const cloudAreaFraction = details.cloud_area_fraction;
+            const precipitationAmount = timeseries[0].data.next_1_hours?.details?.precipitation_amount || 0;
 
-        // Determine weather condition (e.g., rain, sunshine, cloudy)
-        let weatherCondition = "☁️ Cloudy";
-        if (details.precipitation_amount > 0) {
-            weatherCondition = "☔ Rainy";
-        } else if (details.cloud_area_fraction < 20) {
-            weatherCondition = "☀️ Sunny";
+            // Determine weather condition (e.g., rain, sunshine, cloudy)
+            let weatherCondition = "☁️ Cloudy";
+            if (precipitationAmount > 0) {
+                weatherCondition = "☔ Rainy";
+            } else if (cloudAreaFraction < 20) {
+                weatherCondition = "☀️ Sunny";
+            }
+
+            // Create the popup content with emojis
+            const weatherInfo = `
+                <b>${cragName}</b><br>
+                ${weatherCondition}<br>
+                🌡️ Temperature: ${temperature}°C <br>
+                💨 Wind Speed: ${windSpeed} m/s <br>
+                💧 Humidity: ${humidity}%`;
+
+            // Show the weather info in a Leaflet popup
+            L.popup()
+                .setLatLng([lat, lon])
+                .setContent(weatherInfo)
+                .openOn(map);
+        } else {
+            console.error('No weather data available');
         }
-
-        // Create the popup content with emojis
-        const weatherInfo = `
-            <b>${cragName}</b><br>
-            ${weatherCondition}<br>
-            🌡️ Temperature: ${temperature}°C <br>
-            💨 Wind Speed: ${windSpeed} m/s <br>
-            💧 Humidity: ${humidity}%`;
-
-        // Show the weather info in a Leaflet popup
-        L.popup()
-            .setLatLng([lat, lon])
-            .setContent(weatherInfo)
-            .openOn(map);
     })
     .catch(error => console.error('Error fetching weather data:', error));
 }
