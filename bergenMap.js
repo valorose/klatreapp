@@ -32,7 +32,12 @@ function getWeather(lat, lon, cragName, marker) {
             "User-Agent": "BergenClimbingApp/1.0 (your_email@example.com)"
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         // Extract weather details
         const timeseries = data.properties.timeseries;
@@ -43,7 +48,8 @@ function getWeather(lat, lon, cragName, marker) {
             const humidity = details.relative_humidity;
 
             // Extract weather symbol from next_1_hours
-            const symbolCode = timeseries[0].data.next_1_hours?.summary?.symbol_code || "cloudy";
+            const nextHourData = timeseries[0].data.next_1_hours;
+            const symbolCode = nextHourData?.summary?.symbol_code || "cloudy";
             let weatherCondition = "☁️ Cloudy";
 
             // Set weather condition based on symbol code
@@ -88,5 +94,8 @@ function getWeather(lat, lon, cragName, marker) {
             console.error('No weather data available');
         }
     })
-    .catch(error => console.error('Error fetching weather data:', error));
+    .catch(error => {
+        console.error('Error fetching weather data:', error);
+        marker.bindPopup(`<b>${cragName}</b><br>Weather data not available`).openPopup();
+    });
 }
