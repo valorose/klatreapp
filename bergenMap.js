@@ -88,8 +88,10 @@ function getWeather(lat, lon, cragName, marker) {
                 💨 Wind Speed: ${windSpeed} m/s <br>
                 💧 Humidity: ${humidity}%`;
 
-            // Show the weather info directly on the marker's popup
-            marker.bindPopup(weatherInfo).openPopup();
+            // Delay showing the popup to ensure it works on mobile
+            setTimeout(() => {
+                marker.bindPopup(weatherInfo).openPopup();
+            }, 200);
         } else {
             console.error('No weather data available');
         }
