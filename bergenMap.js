@@ -1,3 +1,5 @@
+// bergenMap.js
+
 // Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
 var map = L.map('map').setView([60.3913, 5.3221], 10);
 
@@ -38,9 +40,18 @@ function getWeather(lat, lon, cragName) {
         const windSpeed = details.wind_speed;
         const humidity = details.relative_humidity;
 
+        // Determine weather condition (e.g., rain, sunshine, cloudy)
+        let weatherCondition = "☁️ Cloudy";
+        if (details.precipitation_amount > 0) {
+            weatherCondition = "☔ Rainy";
+        } else if (details.cloud_area_fraction < 20) {
+            weatherCondition = "☀️ Sunny";
+        }
+
         // Create the popup content with emojis
         const weatherInfo = `
             <b>${cragName}</b><br>
+            ${weatherCondition}<br>
             🌡️ Temperature: ${temperature}°C <br>
             💨 Wind Speed: ${windSpeed} m/s <br>
             💧 Humidity: ${humidity}%`;
