@@ -18,53 +18,93 @@
         }
 
         header {
-            background-color: #0288d1;
+            background: linear-gradient(90deg, #0288d1, #03a9f4);
             color: #fff;
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         nav {
             display: flex;
             justify-content: center;
-            padding: 10px;
+            padding: 15px;
             background-color: #0277bd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         nav a {
             color: #fff;
-            margin: 0 15px;
+            margin: 0 20px;
             text-decoration: none;
             font-weight: bold;
+            transition: color 0.3s;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: #b3e5fc;
         }
 
         main {
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         #map {
             height: 600px;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 30px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background-color: #0288d1;
             color: #fff;
-            margin-top: 30px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .intro-text {
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text h2 {
+            margin-bottom: 15px;
+            font-size: 2em;
+            color: #0288d1;
+        }
+
+        .intro-text p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .explore-button {
+            background-color: #0288d1;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .explore-button:hover {
+            background-color: #0277bd;
         }
     </style>
 </head>
@@ -82,6 +122,9 @@
         <section class="intro-text">
             <h2>Discover the Best Climbing Spots in Bergen</h2>
             <p>Explore Bergen's climbing crags with ease. Our interactive map provides up-to-date information about different climbing crags, their accessibility, and current weather conditions. Get ready to experience climbing in one of Norway's most scenic locations!</p>
+            <div class="button-container">
+                <button class="explore-button" onclick="document.getElementById('map').scrollIntoView({ behavior: 'smooth' });">Explore the Map</button>
+            </div>
         </section>
         <section id="map"></section>
     </main>
