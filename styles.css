@@ -174,16 +174,34 @@ header h1 {
 
 /* Score-based coloring for markers */
 .marker-high-score {
-    background-color: green;
+    background-color: green !important;
     color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .marker-medium-score {
-    background-color: yellow;
+    background-color: yellow !important;
     color: black;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .marker-low-score {
-    background-color: red;
+    background-color: red !important;
     color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
