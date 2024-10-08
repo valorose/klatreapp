@@ -5,7 +5,7 @@ var map = L.map('map').setView([60.3913, 5.3221], 10);
 
 // Add a tile layer to the map (you can use the open-source tile layer provided by OpenStreetMap)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 // Array to hold crag scores
