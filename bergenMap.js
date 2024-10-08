@@ -42,12 +42,12 @@ function getWeather(lat, lon, cragName) {
             const windSpeed = details.wind_speed;
             const humidity = details.relative_humidity;
 
-            // Check if weather summary is available
-            const summary = timeseries[0].data.next_1_hours?.summary?.symbol_code || "cloudy";
+            // Extract weather symbol from next_1_hours
+            const symbolCode = timeseries[0].data.next_1_hours?.summary?.symbol_code || "cloudy";
             let weatherCondition = "☁️ Cloudy";
 
-            // Set weather condition based on summary
-            switch (summary) {
+            // Set weather condition based on symbol code
+            switch (symbolCode) {
                 case "clearsky":
                     weatherCondition = "☀️ Sunny";
                     break;
@@ -63,6 +63,9 @@ function getWeather(lat, lon, cragName) {
                     break;
                 case "heavyrain":
                     weatherCondition = "🌧️ Heavy Rain";
+                    break;
+                case "fog":
+                    weatherCondition = "🌫️ Foggy";
                     break;
                 case "snow":
                     weatherCondition = "❄️ Snow";
