@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klatrevær - hvor er det best å klatre i dag?</title>
+    <title>Klatrevær - Find the Best Climbing Spots Today!</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
@@ -23,8 +23,6 @@
             padding: 40px 20px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
         }
 
         nav {
@@ -33,8 +31,6 @@
             padding: 15px;
             background-color: #0277bd;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
         }
 
         nav a {
@@ -51,8 +47,6 @@
 
         main {
             padding: 40px 20px;
-            position: relative;
-            z-index: 5;
         }
 
         #map {
@@ -61,8 +55,6 @@
             margin-top: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1;
         }
 
         footer {
@@ -72,8 +64,6 @@
             color: #fff;
             margin-top: 40px;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 10;
         }
 
         .intro-text {
@@ -84,8 +74,6 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 5;
         }
 
         .intro-text h2 {
@@ -102,8 +90,6 @@
         .button-container {
             text-align: center;
             margin-top: 20px;
-            position: relative;
-            z-index: 5;
         }
 
         .explore-button {
@@ -124,27 +110,27 @@
 </head>
 <body>
     <header>
-        <h1>Klatrevær - hvor er det best å klatre i dag?</h1>
+        <h1>Klatrevær - Find the Best Climbing Spots Today!</h1>
     </header>
     <nav>
-        <a href="#">Hjem</a>
-        <a href="#map">Klatrekart</a>
-        <a href="#about">Om</a>
-        <a href="#contact">Kontakt</a>
+        <a href="#">Home</a>
+        <a href="#map">Climbing Map</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
     </nav>
     <main>
         <section class="intro-text">
-            <h2>Oppdag dagens klatreforhold for alle klatrecrags i Bergen med vårt interaktive kart!</h2>
-            <p>Få oppdatert informasjon fra YR om vær, temperatur, solforhold og luftfuktighet. Hold deg informert og finn ut hvor klatreforholdene er best – oppdatert i sanntid.</p>
+            <h2>Discover Today's Climbing Conditions for Bergen's Crags with Our Interactive Map!</h2>
+            <p>Get real-time updates from YR on weather, temperature, sunlight, and humidity. Stay informed and find the best conditions for climbing today.</p>
             <div class="button-container">
-                <button class="explore-button" onclick="document.getElementById('map').scrollIntoView({ behavior: 'smooth' });">Utforsk kartet</button>
+                <button class="explore-button" onclick="document.getElementById('map').scrollIntoView({ behavior: 'smooth' });">Explore the Map</button>
             </div>
         </section>
         <section id="map"></section>
     </main>
     <footer>
-        <p>&copy; 2024 Klatrevær. Alle rettigheter reservert.</p>
-        <p>Følg oss på <a href="#" style="color: #fff; text-decoration: underline;">Instagram</a> for de siste klatrenyhetene!</p>
+        <p>&copy; 2024 Klatrevær. All Rights Reserved.</p>
+        <p>Follow us on <a href="#" style="color: #fff; text-decoration: underline;">Instagram</a> for the latest climbing news!</p>
     </footer>
     <script src="bergenMap.js"></script>
 </body>
