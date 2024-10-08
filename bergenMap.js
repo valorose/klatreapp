@@ -5,12 +5,11 @@ var map = L.map('map').setView([60.3913, 5.3221], 10);
 
 // Add a tile layer to the map (you can use the open-source tile layer provided by OpenStreetMap)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 // Array to hold crag scores
 let cragScores = [];
-let markers = {};
 
 // Load the JSON data
 fetch('crags.json')
@@ -20,9 +19,8 @@ fetch('crags.json')
             // Add each crag to the map as a marker
             var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
-            // Store the crag's details and marker for later access
+            // Store the crag's details for later access
             marker.crag = crag;
-            markers[crag.name] = marker;
 
             // Fetch weather data and update the marker
             getWeather(crag.latitude, crag.longitude, crag.name, marker);
@@ -153,7 +151,7 @@ function getWeather(lat, lon, cragName, marker) {
             marker.bindPopup(weatherInfo);
 
             // Store the score in the cragScores array for later sorting
-            cragScores.push({ name: cragName, score: score, marker: marker });
+            cragScores.push({ name: cragName, score: score });
 
             // Update the top scores list
             updateTopScores();
@@ -188,17 +186,7 @@ function updateTopScores() {
     // Add each top score to the list
     topScores.forEach(crag => {
         const listItem = document.createElement('li');
-        listItem.innerHTML = `${crag.name}: 🏅 Score ${crag.score}/10 
-        <button onclick="showOnMap('${crag.name}')">Show on Map</button>`;
+        listItem.textContent = `${crag.name}: 🏅 Score ${crag.score}/10`;
         topScoresList.appendChild(listItem);
     });
-}
-
-// Function to show a crag on the map when the "Show on Map" button is clicked
-function showOnMap(cragName) {
-    const marker = markers[cragName];
-    if (marker) {
-        map.setView(marker.getLatLng(), 13); // Zoom in to the marker
-        marker.openPopup();
-    }
 }
