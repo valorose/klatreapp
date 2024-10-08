@@ -41,15 +41,34 @@ function getWeather(lat, lon, cragName) {
             const temperature = details.air_temperature;
             const windSpeed = details.wind_speed;
             const humidity = details.relative_humidity;
-            const cloudAreaFraction = details.cloud_area_fraction;
-            const precipitationAmount = timeseries[0].data.next_1_hours?.details?.precipitation_amount || 0;
 
-            // Determine weather condition (e.g., rain, sunshine, cloudy)
+            // Check if weather summary is available
+            const summary = timeseries[0].data.next_1_hours?.summary?.symbol_code || "cloudy";
             let weatherCondition = "☁️ Cloudy";
-            if (precipitationAmount > 0) {
-                weatherCondition = "☔ Rainy";
-            } else if (cloudAreaFraction < 20) {
-                weatherCondition = "☀️ Sunny";
+
+            // Set weather condition based on summary
+            switch (summary) {
+                case "clearsky":
+                    weatherCondition = "☀️ Sunny";
+                    break;
+                case "cloudy":
+                    weatherCondition = "☁️ Cloudy";
+                    break;
+                case "partlycloudy":
+                    weatherCondition = "🌤️ Partly Cloudy";
+                    break;
+                case "lightrain":
+                case "rain":
+                    weatherCondition = "☔ Rainy";
+                    break;
+                case "heavyrain":
+                    weatherCondition = "🌧️ Heavy Rain";
+                    break;
+                case "snow":
+                    weatherCondition = "❄️ Snow";
+                    break;
+                default:
+                    weatherCondition = "☁️ Cloudy";
             }
 
             // Create the popup content with emojis
