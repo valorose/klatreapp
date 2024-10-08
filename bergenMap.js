@@ -1,7 +1,5 @@
 // bergenMap.js
 
-var cragsData = []; // Array to store all crags data including scores
-
 // Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
 var map = L.map('map').setView([60.3913, 5.3221], 10);
 
@@ -9,6 +7,10 @@ var map = L.map('map').setView([60.3913, 5.3221], 10);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+
+// Array to hold crag scores
+let cragScores = [];
+let markers = {};
 
 // Load the JSON data
 fetch('crags.json')
@@ -18,8 +20,9 @@ fetch('crags.json')
             // Add each crag to the map as a marker
             var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
-            // Store the crag's details for later access
+            // Store the crag's details and marker for later access
             marker.crag = crag;
+            markers[crag.name] = marker;
 
             // Fetch weather data and update the marker
             getWeather(crag.latitude, crag.longitude, crag.name, marker);
@@ -116,9 +119,6 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 1;
             }
 
-            // Store the score and crag name for sorting
-            cragsData.push({ name: cragName, score: score });
-
             // Set marker color based on the score
             let markerColorClass;
             if (score >= 8) {
@@ -152,7 +152,10 @@ function getWeather(lat, lon, cragName, marker) {
             // Bind the popup to the marker
             marker.bindPopup(weatherInfo);
 
-            // Update the Top 5 Scores list
+            // Store the score in the cragScores array for later sorting
+            cragScores.push({ name: cragName, score: score, marker: marker });
+
+            // Update the top scores list
             updateTopScores();
 
             // Event listener for opening the popup without losing the marker's icon
@@ -171,19 +174,31 @@ function getWeather(lat, lon, cragName, marker) {
     });
 }
 
-// Function to update the top 5 scores
+// Function to update the top scores in the HTML
 function updateTopScores() {
-    // Sort the cragsData by score in descending order and get the top 5
-    const topScores = cragsData.sort((a, b) => b.score - a.score).slice(0, 5);
+    // Sort cragScores by score in descending order and get the top 5
+    const topScores = cragScores.sort((a, b) => b.score - a.score).slice(0, 5);
 
-    // Select the list element in the HTML to update
+    // Select the top scores list element
     const topScoresList = document.getElementById('top-scores-list');
-    topScoresList.innerHTML = ''; // Clear the current list
 
-    // Populate the top 5 scores in the list
+    // Clear the current list
+    topScoresList.innerHTML = '';
+
+    // Add each top score to the list
     topScores.forEach(crag => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${crag.name} - 🏅 Score: ${crag.score}/10`;
+        listItem.innerHTML = `${crag.name}: 🏅 Score ${crag.score}/10 
+        <button onclick="showOnMap('${crag.name}')">Show on Map</button>`;
         topScoresList.appendChild(listItem);
     });
+}
+
+// Function to show a crag on the map when the "Show on Map" button is clicked
+function showOnMap(cragName) {
+    const marker = markers[cragName];
+    if (marker) {
+        map.setView(marker.getLatLng(), 13); // Zoom in to the marker
+        marker.openPopup();
+    }
 }
