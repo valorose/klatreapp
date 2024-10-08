@@ -89,8 +89,6 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 3;
             } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
                 score += 2;
-            } else {
-                score += 0;
             }
 
             // Temperature Score
@@ -107,8 +105,6 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 2;
             } else if (humidity > 50 && humidity <= 70) {
                 score += 1;
-            } else {
-                score += 0;
             }
 
             // Wind Speed Score
@@ -116,8 +112,6 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 2;
             } else if (windSpeed === 0) {
                 score += 1;
-            } else {
-                score += 0;
             }
 
             // Set marker color based on the score
@@ -150,9 +144,13 @@ function getWeather(lat, lon, cragName, marker) {
                 💨 Wind Speed: ${windSpeed} m/s <br>
                 💧 Humidity: ${humidity}%`;
 
-            // Show the popup on marker click
+            // Bind the popup to the marker
+            marker.bindPopup(weatherInfo);
+
+            // Event listener for opening the popup without losing the marker's icon
             marker.on('click', function () {
-                marker.bindPopup(weatherInfo).openPopup();
+                marker.setIcon(customIcon);
+                marker.openPopup();
             });
 
         } else {
