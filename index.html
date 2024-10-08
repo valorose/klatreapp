@@ -1,173 +1,82 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klatrevær - Find the Best Climbing Spots Today!</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <title>Klatrevær - hvor er det best å klatre i dag?</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+        .gradient-bg {
+            background: linear-gradient(90deg, #4a6fa5 0%, #166088 100%);
         }
-
-        header {
-            background: linear-gradient(90deg, #0288d1, #03a9f4);
-            color: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background-color: #0277bd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        nav a {
-            color: #fff;
-            margin: 0 20px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #b3e5fc;
-        }
-
-        main {
-            padding: 40px 20px;
-        }
-
-        #top-scores {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-
-        #top-scores h2 {
-            color: #0288d1;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        #top-scores-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #top-scores-list li {
-            font-size: 1.2em;
-            padding: 5px 0;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #top-scores-list li:last-child {
-            border-bottom: none;
-        }
-
         #map {
-            height: 600px;
+            height: 400px;
             width: 100%;
-            margin-top: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #0288d1;
-            color: #fff;
-            margin-top: 40px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        .marker-icon {
+            width: 25px;
+            height: 41px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
-
-        .intro-text {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .marker-high-score {
+            background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png');
         }
-
-        .intro-text h2 {
-            margin-bottom: 15px;
-            font-size: 2em;
-            color: #0288d1;
+        .marker-medium-score {
+            background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png');
         }
-
-        .intro-text p {
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .explore-button {
-            background-color: #0288d1;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .explore-button:hover {
-            background-color: #0277bd;
+        .marker-low-score {
+            background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png');
         }
     </style>
 </head>
-<body>
-    <header>
-        <h1>Klatrevær - Find the Best Climbing Spots Today!</h1>
+<body class="flex flex-col min-h-screen bg-gray-100">
+    <header class="gradient-bg text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Klatrevær</h1>
+            <nav>
+                <a href="#" class="mx-2 hover:underline">Hjem</a>
+                <a href="#map" class="mx-2 hover:underline">Klatrekart</a>
+                <a href="#contact" class="mx-2 hover:underline">Kontakt</a>
+            </nav>
+        </div>
     </header>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#map">Climbing Map</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <main>
-        <section class="intro-text">
-            <h2>Discover Today's Climbing Conditions for Bergen's Crags with Our Interactive Map!</h2>
-            <p>Get real-time updates from YR on weather, temperature, sunlight, and humidity. Stay informed and find the best conditions for climbing today.</p>
-            <div class="button-container">
-                <button class="explore-button" onclick="document.getElementById('map').scrollIntoView({ behavior: 'smooth' });">Explore the Map</button>
-            </div>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <section class="mb-12 text-center">
+            <h2 class="text-3xl font-bold mb-4">Hvor er det best å klatre i dag?</h2>
+            <p class="text-xl mb-6">Sjekk forholdene på klatrecrags i Bergen med kartet vårt. Få oppdateringer fra Yr på vær, temperatur, sollys og fuktighet. Finn de beste forholdene i dag.</p>
+            <a href="#map" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1">
+                Utforsk kartet
+            </a>
         </section>
-        <section id="top-scores">
-            <h2>Top 5 Climbing Spots</h2>
-            <ul id="top-scores-list">
-                <!-- The top 5 scores will be dynamically inserted here by JavaScript -->
+
+        <section id="top-scores" class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Topp 5 klatrecrags</h2>
+            <ul id="top-scores-list" class="bg-white p-4 rounded shadow">
+                <!-- Top scores will be dynamically inserted here -->
             </ul>
         </section>
-        <section id="map"></section>
+
+        <section id="map-section" class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Interaktivt Klatrekart</h2>
+            <div id="map" class="rounded shadow"></div>
+        </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Klatrevær. All Rights Reserved.</p>
-        <p>Follow us on <a href="#" style="color: #fff; text-decoration: underline;">Instagram</a> for the latest climbing news!</p>
+
+    <footer class="gradient-bg text-white py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Klatrevær. All Rights Reserved.</p>
+            <p class="mt-2">
+                Følg oss på 
+                <a href="#" class="underline hover:text-gray-300 transition duration-300">Instagram</a>!
+            </p>
+        </div>
     </footer>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="bergenMap.js"></script>
 </body>
 </html>
