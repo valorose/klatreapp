@@ -1,3 +1,5 @@
+// bergenMap.js
+
 // Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
 var map = L.map('map').setView([60.3913, 5.3221], 10);
 
@@ -11,16 +13,8 @@ fetch('crags.json')
     .then(response => response.json())
     .then(crags => {
         crags.forEach(crag => {
-            // Create a custom icon for each marker
-            const customIcon = L.divIcon({
-                className: '',
-                html: '<div class="marker-icon marker-orange"></div>', // Default to orange
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            });
-
-            // Add each crag to the map as a marker with the custom icon
-            var marker = L.marker([crag.latitude, crag.longitude], {icon: customIcon}).addTo(map);
+            // Add each crag to the map as a marker
+            var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
             // Add a click event to open a popup with the crag name and fetch weather data
             marker.on('click', function() {
@@ -64,8 +58,10 @@ function getWeather(lat, lon, cragName, marker) {
                     weatherCondition = "☀️ Sunny";
                     break;
                 case "cloudy":
-                case "partlycloudy":
                     weatherCondition = "☁️ Cloudy";
+                    break;
+                case "partlycloudy":
+                    weatherCondition = "🌤️ Partly Cloudy";
                     break;
                 case "lightrain":
                 case "rain":
@@ -84,74 +80,13 @@ function getWeather(lat, lon, cragName, marker) {
                     weatherCondition = "☁️ Cloudy";
             }
 
-            // Calculate the climbing condition score
-            let score = 0;
-
-            // Weather Condition Score
-            if (symbolCode === "clearsky") {
-                score += 3;
-            } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
-                score += 2;
-            } else {
-                score += 0;
-            }
-
-            // Temperature Score
-            if (temperature >= 15 && temperature <= 20) {
-                score += 3;
-            } else if ((temperature >= 10 && temperature < 15) || (temperature > 20 && temperature <= 25)) {
-                score += 2;
-            } else {
-                score += 1;
-            }
-
-            // Humidity Score
-            if (humidity >= 30 && humidity <= 50) {
-                score += 2;
-            } else if (humidity > 50 && humidity <= 70) {
-                score += 1;
-            } else {
-                score += 0;
-            }
-
-            // Wind Speed Score
-            if (windSpeed > 1 && windSpeed <= 10) {
-                score += 2;
-            } else if (windSpeed === 0) {
-                score += 1;
-            } else {
-                score += 0;
-            }
-
-            // Set marker color based on the score
-            let markerColorClass;
-            if (score >= 8) {
-                markerColorClass = 'marker-bright-green';
-            } else if (score >= 5) {
-                markerColorClass = 'marker-orange';
-            } else {
-                markerColorClass = 'marker-dark-red';
-            }
-
-            // Update the marker icon based on the new score
-            const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
-            const updatedIcon = L.divIcon({
-                className: '',
-                html: iconHtml,
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            });
-
-            marker.setIcon(updatedIcon);
-
-            // Create the popup content with emojis and score
+            // Create the popup content with emojis
             const weatherInfo = `
                 <b>${cragName}</b><br>
                 ${weatherCondition}<br>
                 🌡️ Temperature: ${temperature}°C <br>
                 💨 Wind Speed: ${windSpeed} m/s <br>
-                💧 Humidity: ${humidity}%<br>
-                🏅 Score: ${score}/10`;
+                💧 Humidity: ${humidity}%`;
 
             // Delay showing the popup to ensure it works on mobile
             setTimeout(() => {
