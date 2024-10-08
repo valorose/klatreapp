@@ -123,7 +123,7 @@ a:hover {
 }
 
 .leaflet-popup-content p {
-    margin: 0;
+    margin: 5px 0; /* Adjusted to give consistent spacing between paragraphs */
     padding: 0;
 }
 
@@ -137,6 +137,20 @@ a:hover {
 .leaflet-popup-tip {
     background: #ffffff;
     border: 1px solid #ddd;
+}
+
+/* Popup content styling for better rendering of information */
+.popup-content h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.popup-content p {
+    margin: 5px 0; /* Adding some space between each piece of information */
+    color: #333;
+    font-size: 1em;
 }
 
 /* Styling for the marker icons to ensure they display correctly */
