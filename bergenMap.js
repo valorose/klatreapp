@@ -58,10 +58,8 @@ function getWeather(lat, lon, cragName, marker) {
                     weatherCondition = "☀️ Sunny";
                     break;
                 case "cloudy":
-                    weatherCondition = "☁️ Cloudy";
-                    break;
                 case "partlycloudy":
-                    weatherCondition = "🌤️ Partly Cloudy";
+                    weatherCondition = "☁️ Cloudy";
                     break;
                 case "lightrain":
                 case "rain":
@@ -80,13 +78,74 @@ function getWeather(lat, lon, cragName, marker) {
                     weatherCondition = "☁️ Cloudy";
             }
 
-            // Create the popup content with emojis
+            // Calculate the climbing condition score
+            let score = 0;
+
+            // Weather Condition Score
+            if (symbolCode === "clearsky") {
+                score += 3;
+            } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
+                score += 2;
+            } else {
+                score += 0;
+            }
+
+            // Temperature Score
+            if (temperature >= 15 && temperature <= 20) {
+                score += 3;
+            } else if ((temperature >= 10 && temperature < 15) || (temperature > 20 && temperature <= 25)) {
+                score += 2;
+            } else {
+                score += 1;
+            }
+
+            // Humidity Score
+            if (humidity >= 30 && humidity <= 50) {
+                score += 2;
+            } else if (humidity > 50 && humidity <= 70) {
+                score += 1;
+            } else {
+                score += 0;
+            }
+
+            // Wind Speed Score
+            if (windSpeed > 1 && windSpeed <= 10) {
+                score += 2;
+            } else if (windSpeed === 0) {
+                score += 1;
+            } else {
+                score += 0;
+            }
+
+            // Set marker color based on the score
+            let markerColorClass;
+            if (score >= 8) {
+                markerColorClass = 'marker-bright-green';
+            } else if (score >= 5) {
+                markerColorClass = 'marker-orange';
+            } else {
+                markerColorClass = 'marker-dark-red';
+            }
+
+            // Add a class to the marker element to change its appearance based on score
+            const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
+            const customIcon = L.divIcon({
+                className: '',
+                html: iconHtml,
+                iconSize: [25, 41], // Adjust the size as needed
+                iconAnchor: [12, 41]
+            });
+
+            marker.setIcon(customIcon);
+
+            // Create the popup content with emojis and score
             const weatherInfo = `
                 <b>${cragName}</b><br>
                 ${weatherCondition}<br>
                 🌡️ Temperature: ${temperature}°C <br>
                 💨 Wind Speed: ${windSpeed} m/s <br>
-                💧 Humidity: ${humidity}%`;
+                💧 Humidity: ${humidity}%<br>
+                🏅 Score: ${score}/10`;
 
             // Delay showing the popup to ensure it works on mobile
             setTimeout(() => {
