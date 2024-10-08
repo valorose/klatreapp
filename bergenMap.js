@@ -1,191 +1,156 @@
 // bergenMap.js
 
-// Initialize the map and set its view to the coordinates of Bergen with a zoom level of 10
-var map = L.map('map').setView([60.3913, 5.3221], 10);
+// Constants
+const MAP_CENTER = [60.3913, 5.3221];
+const ZOOM_LEVEL = 10;
+const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const WEATHER_API_URL = 'https://api.met.no/weatherapi/locationforecast/2.0/compact';
+const USER_AGENT = 'BergenClimbingApp/1.0 (your_email@example.com)';
 
-// Add a tile layer to the map (you can use the open-source tile layer provided by OpenStreetMap)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+// Initialize map
+const map = L.map('map').setView(MAP_CENTER, ZOOM_LEVEL);
 
-// Array to hold crag scores
+// Add tile layer
+L.tileLayer(TILE_LAYER_URL, { attribution: TILE_LAYER_ATTRIBUTION }).addTo(map);
+
+// State
 let cragScores = [];
 let markers = {};
 
-// Load the JSON data
-fetch('crags.json')
-    .then(response => response.json())
-    .then(crags => {
-        crags.forEach(crag => {
-            // Add each crag to the map as a marker
-            var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
+// Load crags data
+async function loadCrags() {
+    try {
+        const response = await fetch('crags.json');
+        const crags = await response.json();
+        crags.forEach(crag => addCragToMap(crag));
+    } catch (error) {
+        console.error('Error loading crags.json:', error);
+    }
+}
 
-            // Store the crag's details and marker for later access
-            marker.crag = crag;
-            markers[crag.name] = marker;
+// Add crag to map
+function addCragToMap(crag) {
+    const marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
+    marker.crag = crag;
+    markers[crag.name] = marker;
+    getWeather(crag.latitude, crag.longitude, crag.name, marker);
+}
 
-            // Fetch weather data and update the marker
-            getWeather(crag.latitude, crag.longitude, crag.name, marker);
+// Fetch weather data
+async function getWeather(lat, lon, cragName, marker) {
+    const url = `${WEATHER_API_URL}?lat=${lat}&lon=${lon}`;
+    try {
+        const response = await fetch(url, {
+            headers: { "User-Agent": USER_AGENT }
         });
-    })
-    .catch(error => console.error('Error loading crags.json:', error));
-
-// Function to fetch weather data from Yr API and display it
-function getWeather(lat, lon, cragName, marker) {
-    const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}`;
-    fetch(apiUrl, {
-        headers: {
-            "User-Agent": "BergenClimbingApp/1.0 (your_email@example.com)"
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Extract weather details
-        const timeseries = data.properties.timeseries;
-        if (timeseries && timeseries.length > 0) {
-            const details = timeseries[0].data.instant.details;
-            const temperature = details.air_temperature;
-            const windSpeed = details.wind_speed;
-            const humidity = details.relative_humidity;
-
-            // Extract weather symbol from next_1_hours
-            const nextHourData = timeseries[0].data.next_1_hours;
-            const symbolCode = nextHourData?.summary?.symbol_code || "cloudy";
-            let weatherCondition = "☁️ Cloudy";
-
-            // Set weather condition based on symbol code
-            switch (symbolCode) {
-                case "clearsky":
-                    weatherCondition = "☀️ Sunny";
-                    break;
-                case "cloudy":
-                    weatherCondition = "☁️ Cloudy";
-                    break;
-                case "partlycloudy":
-                    weatherCondition = "🌤️ Partly Cloudy";
-                    break;
-                case "lightrain":
-                case "rain":
-                    weatherCondition = "☔ Rainy";
-                    break;
-                case "heavyrain":
-                    weatherCondition = "🌧️ Heavy Rain";
-                    break;
-                case "fog":
-                    weatherCondition = "🌫️ Foggy";
-                    break;
-                case "snow":
-                    weatherCondition = "❄️ Snow";
-                    break;
-                default:
-                    weatherCondition = "☁️ Cloudy";
-            }
-
-            // Calculate the climbing condition score
-            let score = 0;
-
-            // Weather Condition Score
-            if (symbolCode === "clearsky") {
-                score += 3;
-            } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
-                score += 2;
-            }
-
-            // Temperature Score
-            if (temperature >= 15 && temperature <= 20) {
-                score += 3;
-            } else if ((temperature >= 10 && temperature < 15) || (temperature > 20 && temperature <= 25)) {
-                score += 2;
-            } else {
-                score += 1;
-            }
-
-            // Humidity Score
-            if (humidity >= 30 && humidity <= 50) {
-                score += 2;
-            } else if (humidity > 50 && humidity <= 70) {
-                score += 1;
-            }
-
-            // Wind Speed Score
-            if (windSpeed > 1 && windSpeed <= 10) {
-                score += 2;
-            } else if (windSpeed === 0) {
-                score += 1;
-            }
-
-            // Set marker color based on the score
-            let markerColorClass;
-            if (score >= 8) {
-                markerColorClass = 'marker-high-score';
-            } else if (score >= 5) {
-                markerColorClass = 'marker-medium-score';
-            } else {
-                markerColorClass = 'marker-low-score';
-            }
-
-            // Add a class to the marker element to change its appearance based on score
-            const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
-            const customIcon = L.divIcon({
-                className: '',
-                html: iconHtml,
-                iconSize: [25, 41], // Adjust the size as needed
-                iconAnchor: [12, 41]
-            });
-
-            marker.setIcon(customIcon);
-
-            // Create the popup content with emojis and score
-            const weatherInfo = `
-                <b>${cragName}</b><br>
-                🏅 Score: ${score}/10<br>
-                ${weatherCondition}<br>
-                🌡️ Temperature: ${temperature}°C <br>
-                💨 Wind Speed: ${windSpeed} m/s <br>
-                💧 Humidity: ${humidity}%`;
-
-            // Bind the popup to the marker
-            marker.bindPopup(weatherInfo);
-
-            // Store the score in the cragScores array for later sorting
-            cragScores.push({ name: cragName, score: score, marker: marker });
-
-            // Update the top scores list
-            updateTopScores();
-
-            // Event listener for opening the popup without losing the marker's icon
-            marker.on('click', function () {
-                marker.setIcon(customIcon);
-                marker.openPopup();
-            });
-
-        } else {
-            console.error('No weather data available');
-        }
-    })
-    .catch(error => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        processWeatherData(data, cragName, marker);
+    } catch (error) {
         console.error('Error fetching weather data:', error);
         marker.bindPopup(`<b>${cragName}</b><br>Weather data not available`).openPopup();
+    }
+}
+
+// Process weather data
+function processWeatherData(data, cragName, marker) {
+    const timeseries = data.properties.timeseries;
+    if (!timeseries || timeseries.length === 0) {
+        console.error('No weather data available');
+        return;
+    }
+
+    const details = timeseries[0].data.instant.details;
+    const nextHourData = timeseries[0].data.next_1_hours;
+    const symbolCode = nextHourData?.summary?.symbol_code || "cloudy";
+
+    const weatherInfo = createWeatherInfo(cragName, details, symbolCode);
+    const score = calculateClimbingScore(details, symbolCode);
+    updateMarker(marker, score, weatherInfo);
+    updateCragScores(cragName, score, marker);
+}
+
+// Create weather info HTML
+function createWeatherInfo(cragName, details, symbolCode) {
+    const weatherCondition = getWeatherCondition(symbolCode);
+    return `
+        <b>${cragName}</b><br>
+        🏅 Score: ${calculateClimbingScore(details, symbolCode)}/10<br>
+        ${weatherCondition}<br>
+        🌡️ Temperature: ${details.air_temperature}°C <br>
+        💨 Wind Speed: ${details.wind_speed} m/s <br>
+        💧 Humidity: ${details.relative_humidity}%`;
+}
+
+// Get weather condition based on symbol code
+function getWeatherCondition(symbolCode) {
+    const conditions = {
+        clearsky: "☀️ Sunny",
+        cloudy: "☁️ Cloudy",
+        partlycloudy: "🌤️ Partly Cloudy",
+        lightrain: "☔ Rainy",
+        rain: "☔ Rainy",
+        heavyrain: "🌧️ Heavy Rain",
+        fog: "🌫️ Foggy",
+        snow: "❄️ Snow"
+    };
+    return conditions[symbolCode] || "☁️ Cloudy";
+}
+
+// Calculate climbing condition score
+function calculateClimbingScore(details, symbolCode) {
+    let score = 0;
+    
+    // Weather Condition Score
+    score += symbolCode === "clearsky" ? 3 : (["cloudy", "partlycloudy"].includes(symbolCode) ? 2 : 0);
+
+    // Temperature Score
+    const temp = details.air_temperature;
+    score += (temp >= 15 && temp <= 20) ? 3 : ((temp >= 10 && temp < 15) || (temp > 20 && temp <= 25)) ? 2 : 1;
+
+    // Humidity Score
+    const humidity = details.relative_humidity;
+    score += (humidity >= 30 && humidity <= 50) ? 2 : (humidity > 50 && humidity <= 70) ? 1 : 0;
+
+    // Wind Speed Score
+    const wind = details.wind_speed;
+    score += (wind > 1 && wind <= 10) ? 2 : (wind === 0) ? 1 : 0;
+
+    return score;
+}
+
+// Update marker based on score
+function updateMarker(marker, score, weatherInfo) {
+    const markerColorClass = score >= 8 ? 'marker-high-score' : (score >= 5 ? 'marker-medium-score' : 'marker-low-score');
+    const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
+    const customIcon = L.divIcon({
+        className: '',
+        html: iconHtml,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
+    });
+
+    marker.setIcon(customIcon);
+    marker.bindPopup(weatherInfo);
+
+    marker.on('click', function () {
+        marker.setIcon(customIcon);
+        marker.openPopup();
     });
 }
 
-// Function to update the top scores in the HTML
+// Update crag scores
+function updateCragScores(cragName, score, marker) {
+    cragScores.push({ name: cragName, score: score, marker: marker });
+    updateTopScores();
+}
+
+// Update top scores list
 function updateTopScores() {
-    // Sort cragScores by score in descending order and get the top 5
     const topScores = cragScores.sort((a, b) => b.score - a.score).slice(0, 5);
-
-    // Select the top scores list element
     const topScoresList = document.getElementById('top-scores-list');
-
-    // Clear the current list
     topScoresList.innerHTML = '';
-
-    // Add each top score to the list
     topScores.forEach(crag => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `${crag.name}: 🏅 Score ${crag.score}/10 
@@ -194,11 +159,14 @@ function updateTopScores() {
     });
 }
 
-// Function to show a crag on the map when the "Show on Map" button is clicked
+// Show crag on map
 function showOnMap(cragName) {
     const marker = markers[cragName];
     if (marker) {
-        map.setView(marker.getLatLng(), 13); // Zoom in to the marker
+        map.setView(marker.getLatLng(), 13);
         marker.openPopup();
     }
 }
+
+// Initialize the application
+loadCrags();
