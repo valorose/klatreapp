@@ -1,0 +1,680 @@
+[
+    {
+        "name": "Bymuren",
+        "latitude": 60.429134,
+        "longitude": 5.295053,
+        "id": 1
+    },
+    {
+        "name": "Loddefjord",
+        "latitude": 60.36283,
+        "longitude": 5.238142,
+        "id": 2
+    },
+    {
+        "name": "Sylt\u00f8y",
+        "latitude": 60.333668,
+        "longitude": 4.977402,
+        "id": 3
+    },
+    {
+        "name": "V\u00e5geveggen",
+        "latitude": 60.38249,
+        "longitude": 5.107053,
+        "id": 4
+    },
+    {
+        "name": "Helleneset",
+        "latitude": 60.434326,
+        "longitude": 5.280634,
+        "id": 5
+    },
+    {
+        "name": "Mojavato",
+        "latitude": 60.196465,
+        "longitude": 5.768992,
+        "id": 6
+    },
+    {
+        "name": "Uteveggen",
+        "latitude": 60.553764,
+        "longitude": 4.86558,
+        "id": 7
+    },
+    {
+        "name": "Korsnes",
+        "latitude": 60.207752,
+        "longitude": 5.275649,
+        "id": 8
+    },
+    {
+        "name": "Krokeide",
+        "latitude": 60.23687,
+        "longitude": 5.309038,
+        "id": 9
+    },
+    {
+        "name": "Kvarven",
+        "latitude": 60.387367,
+        "longitude": 5.246608,
+        "id": 10
+    },
+    {
+        "name": "Neseveggen",
+        "latitude": 60.304146,
+        "longitude": 5.022521,
+        "id": 11
+    },
+    {
+        "name": "Mostraumen",
+        "latitude": 60.76562,
+        "longitude": 5.722728,
+        "id": 12
+    },
+    {
+        "name": "Perleveggen",
+        "latitude": 60.5816,
+        "longitude": 5.063409,
+        "id": 13
+    },
+    {
+        "name": "Gj\u00f8keredet",
+        "latitude": 60.42909,
+        "longitude": 4.97948,
+        "id": 14
+    },
+    {
+        "name": "B\u00f8tteveggen",
+        "latitude": 60.43291,
+        "longitude": 4.98211,
+        "id": 15
+    },
+    {
+        "name": "M\u00f8tteveggen",
+        "latitude": 60.4442,
+        "longitude": 4.9723,
+        "id": 16
+    },
+    {
+        "name": "Furunkulose",
+        "latitude": 60.460075,
+        "longitude": 4.93356,
+        "id": 17
+    },
+    {
+        "name": "Tur\u00f8y",
+        "latitude": 60.446697,
+        "longitude": 4.918127,
+        "id": 18
+    },
+    {
+        "name": "Hellen festning",
+        "latitude": 60.432545,
+        "longitude": 5.288134,
+        "id": 19
+    },
+    {
+        "name": "Fjellsiden",
+        "latitude": 60.39979,
+        "longitude": 5.333331,
+        "id": 20
+    },
+    {
+        "name": "Skredderdalen",
+        "latitude": 60.40458,
+        "longitude": 5.343405,
+        "id": 21
+    },
+    {
+        "name": "R\u00e6vuri",
+        "latitude": 60.472454,
+        "longitude": 5.140553,
+        "id": 22
+    },
+    {
+        "name": "Propagandaveggen",
+        "latitude": 60.289536,
+        "longitude": 5.1059,
+        "id": 23
+    },
+    {
+        "name": "Bikkjeveggen",
+        "latitude": 60.29121,
+        "longitude": 5.101628,
+        "id": 24
+    },
+    {
+        "name": "Bl\u00e5b\u00e6rveggen",
+        "latitude": 60.288586,
+        "longitude": 5.105045,
+        "id": 25
+    },
+    {
+        "name": "Stjerneveggen",
+        "latitude": 60.28876,
+        "longitude": 5.106092,
+        "id": 26
+    },
+    {
+        "name": "Lok\u00f8y",
+        "latitude": 60.331844,
+        "longitude": 4.972464,
+        "id": 27
+    },
+    {
+        "name": "Sageveggen",
+        "latitude": 60.29853,
+        "longitude": 5.042193,
+        "id": 28
+    },
+    {
+        "name": "Hesteveggen",
+        "latitude": 60.42368,
+        "longitude": 4.980627,
+        "id": 29
+    },
+    {
+        "name": "Trollspeilet",
+        "latitude": 60.28924,
+        "longitude": 5.111073,
+        "id": 30
+    },
+    {
+        "name": "Atlantis",
+        "latitude": 60.457848,
+        "longitude": 4.926632,
+        "id": 31
+    },
+    {
+        "name": "Hjallaveggen",
+        "latitude": 60.462315,
+        "longitude": 4.955931,
+        "id": 32
+    },
+    {
+        "name": "Sandviken",
+        "latitude": 60.41661,
+        "longitude": 5.319018,
+        "id": 33
+    },
+    {
+        "name": "S\u00e6dalen",
+        "latitude": 60.34629,
+        "longitude": 5.39645,
+        "id": 34
+    },
+    {
+        "name": "Glesnes",
+        "latitude": 60.222942,
+        "longitude": 5.023202,
+        "id": 35
+    },
+    {
+        "name": "Morvik",
+        "latitude": 60.473946,
+        "longitude": 5.279594,
+        "id": 36
+    },
+    {
+        "name": "Den hemmelige veggen",
+        "latitude": 60.341732,
+        "longitude": 5.253917,
+        "id": 37
+    },
+    {
+        "name": "L\u00f8no",
+        "latitude": 60.33158,
+        "longitude": 4.900786,
+        "id": 38
+    },
+    {
+        "name": "Selv\u00e5gen",
+        "latitude": 60.30527,
+        "longitude": 5.050523,
+        "id": 39
+    },
+    {
+        "name": "Missiveggen",
+        "latitude": 60.43224,
+        "longitude": 5.320318,
+        "id": 40
+    },
+    {
+        "name": "Vikso",
+        "latitude": 60.16417,
+        "longitude": 5.043446,
+        "id": 41
+    },
+    {
+        "name": "Goltastraumen",
+        "latitude": 60.2203,
+        "longitude": 5.020927,
+        "id": 42
+    },
+    {
+        "name": "Stjernehimmelen",
+        "latitude": 60.195656,
+        "longitude": 5.112644,
+        "id": 43
+    },
+    {
+        "name": "Krabbeveggen",
+        "latitude": 60.38699,
+        "longitude": 5.049644,
+        "id": 44
+    },
+    {
+        "name": "Dr\u00f8mmehagen",
+        "latitude": 60.471813,
+        "longitude": 4.95899,
+        "id": 45
+    },
+    {
+        "name": "Piratbukta",
+        "latitude": 60.330963,
+        "longitude": 4.980947,
+        "id": 46
+    },
+    {
+        "name": "Skyggenes dal",
+        "latitude": 60.30622,
+        "longitude": 5.016872,
+        "id": 47
+    },
+    {
+        "name": "Veat\u00e5a",
+        "latitude": 60.29328,
+        "longitude": 5.09805,
+        "id": 48
+    },
+    {
+        "name": "Liafjell",
+        "latitude": 60.29366,
+        "longitude": 5.101491,
+        "id": 49
+    },
+    {
+        "name": "Trollveggen",
+        "latitude": 60.29149,
+        "longitude": 5.100641,
+        "id": 50
+    },
+    {
+        "name": "Stokkafjell",
+        "latitude": 60.28686,
+        "longitude": 5.112674,
+        "id": 51
+    },
+    {
+        "name": "Haganesfjell",
+        "latitude": 60.28521,
+        "longitude": 5.119725,
+        "id": 52
+    },
+    {
+        "name": "Jesusveggen",
+        "latitude": 60.27754,
+        "longitude": 5.124281,
+        "id": 53
+    },
+    {
+        "name": "Kirkeveggen",
+        "latitude": 60.281254,
+        "longitude": 5.11922,
+        "id": 54
+    },
+    {
+        "name": "Kjerringafjell",
+        "latitude": 60.27933,
+        "longitude": 5.119783,
+        "id": 55
+    },
+    {
+        "name": "Kusanden",
+        "latitude": 60.29532,
+        "longitude": 5.092157,
+        "id": 56
+    },
+    {
+        "name": "Ramnafjell",
+        "latitude": 60.289852,
+        "longitude": 5.095783,
+        "id": 57
+    },
+    {
+        "name": "Skorafjell",
+        "latitude": 60.30122,
+        "longitude": 5.100843,
+        "id": 58
+    },
+    {
+        "name": "\u00d8rnanipa",
+        "latitude": 60.286896,
+        "longitude": 5.107687,
+        "id": 59
+    },
+    {
+        "name": "Hjellaberget",
+        "latitude": 60.795086,
+        "longitude": 6.119891,
+        "id": 60
+    },
+    {
+        "name": "Bolstad\u00f8yri",
+        "latitude": 60.6525,
+        "longitude": 5.999699,
+        "id": 61
+    },
+    {
+        "name": "Uskedalen",
+        "latitude": 59.89177,
+        "longitude": 5.951708,
+        "id": 62
+    },
+    {
+        "name": "Eikedalen",
+        "latitude": 59.89772,
+        "longitude": 5.846984,
+        "id": 63
+    },
+    {
+        "name": "Hjortegryta",
+        "latitude": 59.86963,
+        "longitude": 5.993651,
+        "id": 64
+    },
+    {
+        "name": "Hjernemasseveggen",
+        "latitude": 60.621727,
+        "longitude": 5.593798,
+        "id": 65
+    },
+    {
+        "name": "Boti",
+        "latitude": 60.450848,
+        "longitude": 5.08301,
+        "id": 66
+    },
+    {
+        "name": "Berlandshelleren",
+        "latitude": 60.52317,
+        "longitude": 5.047857,
+        "id": 67
+    },
+    {
+        "name": "Ville Vesten",
+        "latitude": 60.28028,
+        "longitude": 5.004405,
+        "id": 68
+    },
+    {
+        "name": "Straumberget",
+        "latitude": 60.395164,
+        "longitude": 5.164371,
+        "id": 69
+    },
+    {
+        "name": "Eventyrveggen",
+        "latitude": 60.714443,
+        "longitude": 5.547991,
+        "id": 70
+    },
+    {
+        "name": "Fiskesleppet",
+        "latitude": 60.2664,
+        "longitude": 4.96912,
+        "id": 71
+    },
+    {
+        "name": "1. mai-veggen",
+        "latitude": 60.370705,
+        "longitude": 5.294579,
+        "id": 72
+    },
+    {
+        "name": "Fabrikkveggen",
+        "latitude": 60.39795,
+        "longitude": 5.200333,
+        "id": 73
+    },
+    {
+        "name": "Panoramaveggen",
+        "latitude": 60.28758,
+        "longitude": 5.107856,
+        "id": 74
+    },
+    {
+        "name": "Tuo",
+        "latitude": 60.210583,
+        "longitude": 5.020716,
+        "id": 75
+    },
+    {
+        "name": "Marikoven",
+        "latitude": 60.399265,
+        "longitude": 5.167891,
+        "id": 76
+    },
+    {
+        "name": "Steinrusten",
+        "latitude": 60.443336,
+        "longitude": 5.202799,
+        "id": 77
+    },
+    {
+        "name": "Myrveggen",
+        "latitude": 60.432346,
+        "longitude": 5.175369,
+        "id": 78
+    },
+    {
+        "name": "Signalveggen",
+        "latitude": 60.33245,
+        "longitude": 5.008264,
+        "id": 79
+    },
+    {
+        "name": "Venusberget",
+        "latitude": 60.411034,
+        "longitude": 5.148674,
+        "id": 80
+    },
+    {
+        "name": "Grapseveggen",
+        "latitude": 60.43206,
+        "longitude": 5.004018,
+        "id": 81
+    },
+    {
+        "name": "Tunnelveggen",
+        "latitude": 60.398968,
+        "longitude": 5.198537,
+        "id": 82
+    },
+    {
+        "name": "Kjereide",
+        "latitude": 60.28414,
+        "longitude": 5.0044,
+        "id": 83
+    },
+    {
+        "name": "Hetta",
+        "latitude": 60.538006,
+        "longitude": 5.721881,
+        "id": 84
+    },
+    {
+        "name": "Hetlevik\u00e5sen",
+        "latitude": 60.35083,
+        "longitude": 5.216801,
+        "id": 85
+    },
+    {
+        "name": "Fergeveggen",
+        "latitude": 60.222,
+        "longitude": 5.291001,
+        "id": 86
+    },
+    {
+        "name": "Storeklubben",
+        "latitude": 60.210613,
+        "longitude": 5.011756,
+        "id": 87
+    },
+    {
+        "name": "Mulestigen",
+        "latitude": 60.405094,
+        "longitude": 5.336936,
+        "id": 88
+    },
+    {
+        "name": "Lilleklubben",
+        "latitude": 60.210823,
+        "longitude": 5.007515,
+        "id": 89
+    },
+    {
+        "name": "Florv\u00e5g\u00f8en",
+        "latitude": 60.42114,
+        "longitude": 5.24508,
+        "id": 90
+    },
+    {
+        "name": "Hatleberget",
+        "latitude": 60.422684,
+        "longitude": 5.307671,
+        "id": 91
+    },
+    {
+        "name": "Hjelteryggen",
+        "latitude": 60.38263,
+        "longitude": 5.138104,
+        "id": 92
+    },
+    {
+        "name": "BOF-veggen",
+        "latitude": 60.4348,
+        "longitude": 5.282073,
+        "id": 93
+    },
+    {
+        "name": "Fureberget",
+        "latitude": 60.431988,
+        "longitude": 5.369614,
+        "id": 94
+    },
+    {
+        "name": "Geithelleren",
+        "latitude": 60.436016,
+        "longitude": 5.361585,
+        "id": 95
+    },
+    {
+        "name": "Nipedalen",
+        "latitude": 60.372437,
+        "longitude": 5.271138,
+        "id": 96
+    },
+    {
+        "name": "Dronningen",
+        "latitude": 60.47295,
+        "longitude": 5.172297,
+        "id": 97
+    },
+    {
+        "name": "Ramsvik",
+        "latitude": 60.36349,
+        "longitude": 5.18377,
+        "id": 98
+    },
+    {
+        "name": "Glesv\u00e6r",
+        "latitude": 60.20857,
+        "longitude": 5.023829,
+        "id": 99
+    },
+    {
+        "name": "Bekhilderen",
+        "latitude": 60.23783,
+        "longitude": 4.984333,
+        "id": 100
+    },
+    {
+        "name": "Sandviken Sj\u00f8bad",
+        "latitude": 60.417175,
+        "longitude": 5.309977,
+        "id": 101
+    },
+    {
+        "name": "Sandholna",
+        "latitude": 60.256584,
+        "longitude": 5.279706,
+        "id": 102
+    },
+    {
+        "name": "Kundeklubben",
+        "latitude": 60.211163,
+        "longitude": 5.004889,
+        "id": 103
+    },
+    {
+        "name": "Myrdalsvannet",
+        "latitude": 60.311375,
+        "longitude": 5.395896,
+        "id": 104
+    },
+    {
+        "name": "Broveggen",
+        "latitude": 60.372803,
+        "longitude": 5.170732,
+        "id": 105
+    },
+    {
+        "name": "Drangsneset",
+        "latitude": 60.207115,
+        "longitude": 5.352097,
+        "id": 106
+    },
+    {
+        "name": "Trollkona",
+        "latitude": 60.627308,
+        "longitude": 5.878867,
+        "id": 107
+    },
+    {
+        "name": "Selst\u00f8",
+        "latitude": 60.24571,
+        "longitude": 4.989371,
+        "id": 108
+    },
+    {
+        "name": "Elvefeltet",
+        "latitude": 60.64781,
+        "longitude": 5.998098,
+        "id": 109
+    },
+    {
+        "name": "Trimteateret",
+        "latitude": 60.29792,
+        "longitude": 5.094421,
+        "id": 110
+    },
+    {
+        "name": "Halhjem",
+        "latitude": 60.14611,
+        "longitude": 5.446583,
+        "id": 111
+    },
+    {
+        "name": "Skogs\u00f8ytua",
+        "latitude": 60.55156,
+        "longitude": 4.798152,
+        "id": 112
+    },
+    {
+        "name": "Sentralveggen",
+        "latitude": 60.429977,
+        "longitude": 5.17492,
+        "id": 113
+    }
+]
