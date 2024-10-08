@@ -197,6 +197,7 @@ a:hover {
     width: 25px;
     height: 25px;
     text-align: center;
+    border: 2px solid #ffffff; /* Add border to make the markers more visible */
 }
 
 /* Score-based coloring for markers */
