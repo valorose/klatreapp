@@ -16,16 +16,16 @@ fetch('crags.json')
             // Add each crag to the map as a marker
             var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
-            // Add both 'click' and 'tap' events to ensure compatibility on mobile
-            marker.bindPopup(`<b>${crag.name}</b>`).on('click tap', function() {
-                getWeather(crag.latitude, crag.longitude, crag.name);
+            // Add a click event to open a popup with the crag name and fetch weather data
+            marker.on('click', function() {
+                getWeather(crag.latitude, crag.longitude, crag.name, marker);
             });
         });
     })
     .catch(error => console.error('Error loading crags.json:', error));
 
 // Function to fetch weather data from Yr API and display it
-function getWeather(lat, lon, cragName) {
+function getWeather(lat, lon, cragName, marker) {
     const apiUrl = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}`;
     fetch(apiUrl, {
         headers: {
@@ -82,11 +82,8 @@ function getWeather(lat, lon, cragName) {
                 💨 Wind Speed: ${windSpeed} m/s <br>
                 💧 Humidity: ${humidity}%`;
 
-            // Show the weather info in a Leaflet popup
-            L.popup()
-                .setLatLng([lat, lon])
-                .setContent(weatherInfo)
-                .openOn(map);
+            // Show the weather info directly on the marker's popup
+            marker.bindPopup(weatherInfo).openPopup();
         } else {
             console.error('No weather data available');
         }
