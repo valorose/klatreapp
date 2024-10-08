@@ -14,7 +14,14 @@ fetch('crags.json')
     .then(crags => {
         crags.forEach(crag => {
             // Add each crag to the map as a marker
-            var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
+            var marker = L.marker([crag.latitude, crag.longitude], {
+                icon: L.divIcon({
+                    className: 'default-marker-icon', // Default class before setting color
+                    html: '<div class="marker-icon marker-medium-score"></div>', // Set a placeholder icon color
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                })
+            }).addTo(map);
 
             // Add a click event to open a popup with the crag name and fetch weather data
             marker.on('click', function() {
@@ -116,18 +123,17 @@ function getWeather(lat, lon, cragName, marker) {
             // Set marker color based on the score
             let markerColorClass;
             if (score >= 8) {
-                markerColorClass = 'marker-bright-green';
+                markerColorClass = 'marker-high-score';
             } else if (score >= 5) {
-                markerColorClass = 'marker-orange';
+                markerColorClass = 'marker-medium-score';
             } else {
-                markerColorClass = 'marker-dark-red';
+                markerColorClass = 'marker-low-score';
             }
 
-            // Add a class to the marker element to change its appearance based on score
-            const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
+            // Update marker with appropriate color based on score
             const customIcon = L.divIcon({
                 className: '',
-                html: iconHtml,
+                html: `<div class="marker-icon ${markerColorClass}"></div>`,
                 iconSize: [25, 41], // Adjust the size as needed
                 iconAnchor: [12, 41]
             });
