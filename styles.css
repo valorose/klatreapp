@@ -34,6 +34,39 @@ body {
     border-right: 3px solid #007bff;
 }
 
+/* Top scores container styling */
+#top-scores {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#top-scores h2 {
+    color: #007bff;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+#top-scores-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#top-scores-list li {
+    font-size: 1.2em;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#top-scores-list li:last-child {
+    border-bottom: none;
+}
+
 /* Heading styling */
 h1 {
     text-align: center;
