@@ -14,19 +14,13 @@ fetch('crags.json')
     .then(crags => {
         crags.forEach(crag => {
             // Add each crag to the map as a marker
-            var marker = L.marker([crag.latitude, crag.longitude], {
-                icon: L.divIcon({
-                    className: 'default-marker-icon', // Default class before setting color
-                    html: '<div class="marker-icon marker-medium-score"></div>', // Set a placeholder icon color
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41]
-                })
-            }).addTo(map);
+            var marker = L.marker([crag.latitude, crag.longitude]).addTo(map);
 
-            // Add a click event to open a popup with the crag name and fetch weather data
-            marker.on('click', function() {
-                getWeather(crag.latitude, crag.longitude, crag.name, marker);
-            });
+            // Store the crag's details for later access
+            marker.crag = crag;
+
+            // Fetch weather data and update the marker
+            getWeather(crag.latitude, crag.longitude, crag.name, marker);
         });
     })
     .catch(error => console.error('Error loading crags.json:', error));
@@ -95,6 +89,8 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 3;
             } else if (symbolCode === "cloudy" || symbolCode === "partlycloudy") {
                 score += 2;
+            } else {
+                score += 0;
             }
 
             // Temperature Score
@@ -111,6 +107,8 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 2;
             } else if (humidity > 50 && humidity <= 70) {
                 score += 1;
+            } else {
+                score += 0;
             }
 
             // Wind Speed Score
@@ -118,6 +116,8 @@ function getWeather(lat, lon, cragName, marker) {
                 score += 2;
             } else if (windSpeed === 0) {
                 score += 1;
+            } else {
+                score += 0;
             }
 
             // Set marker color based on the score
@@ -130,29 +130,31 @@ function getWeather(lat, lon, cragName, marker) {
                 markerColorClass = 'marker-low-score';
             }
 
-            // Update marker with appropriate color based on score
+            // Add a class to the marker element to change its appearance based on score
+            const iconHtml = `<div class="marker-icon ${markerColorClass}"></div>`;
             const customIcon = L.divIcon({
                 className: '',
-                html: `<div class="marker-icon ${markerColorClass}"></div>`,
+                html: iconHtml,
                 iconSize: [25, 41], // Adjust the size as needed
                 iconAnchor: [12, 41]
             });
 
             marker.setIcon(customIcon);
 
-            // Create the popup content with score integrated into other weather details
+            // Create the popup content with emojis and score
             const weatherInfo = `
                 <b>${cragName}</b><br>
                 🏅 Score: ${score}/10<br>
                 ${weatherCondition}<br>
-                🌡️ Temperature: ${temperature.toFixed(1)}°C<br>
-                💨 Wind Speed: ${windSpeed.toFixed(1)} m/s<br>
-                💧 Humidity: ${humidity.toFixed(1)}%`;
+                🌡️ Temperature: ${temperature}°C <br>
+                💨 Wind Speed: ${windSpeed} m/s <br>
+                💧 Humidity: ${humidity}%`;
 
-            // Delay showing the popup to ensure it works on mobile
-            setTimeout(() => {
+            // Show the popup on marker click
+            marker.on('click', function () {
                 marker.bindPopup(weatherInfo).openPopup();
-            }, 200);
+            });
+
         } else {
             console.error('No weather data available');
         }
