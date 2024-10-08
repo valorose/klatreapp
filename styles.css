@@ -38,3 +38,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* Weather condition styling */
+.weather-icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
