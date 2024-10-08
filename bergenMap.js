@@ -119,13 +119,13 @@ function getWeather(lat, lon, cragName, marker) {
 
             // Set marker color based on the score
             let markerColor;
-            if (score >= 8) {
-                markerColor = 'green';
-            } else if (score >= 5) {
-                markerColor = 'yellow';
-            } else {
-                markerColor = 'red';
-            }
+if (score >= 8) {
+    markerColor = 'bright-green';
+} else if (score >= 5) {
+    markerColor = 'orange';
+} else {
+    markerColor = 'dark-red';
+}
             // Update marker icon but keep the original marker icon when popup is opened
 marker.setIcon(marker.getIcon() || L.divIcon({ className: `marker-${markerColor}-score`, html: `<div class="marker-icon"></div>` }));
 
