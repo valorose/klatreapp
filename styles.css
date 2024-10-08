@@ -201,17 +201,17 @@ a:hover {
 
 /* Score-based coloring for markers */
 .marker-high-score {
-    background-color: #4CAF50 !important; /* Green for high scores */
+    background-color: #4CAF50; /* Green for high scores */
     color: white;
 }
 
 .marker-medium-score {
-    background-color: #FF9800 !important; /* Orange for medium scores */
+    background-color: #FF9800; /* Orange for medium scores */
     color: black;
 }
 
 .marker-low-score {
-    background-color: #F44336 !important; /* Red for low scores */
+    background-color: #F44336; /* Red for low scores */
     color: white;
 }
 
