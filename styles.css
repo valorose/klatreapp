@@ -154,3 +154,12 @@ h1:after {
 #crag-details:after {
     content: "Sjekk klatreforholdene i kartet. Med oppdaterte data fra YR. Oppdateres hele tiden.";
 }
+
+/* Update HTML title and header text */
+header h1 {
+    content: "Klatrevær - hvor er det best å klatre i dag?";
+}
+
+.intro-text h2 {
+    content: "Sjekk klatreforholdene i kartet. Med oppdaterte data fra YR. Oppdateres hele tiden.";
+}
