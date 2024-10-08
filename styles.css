@@ -173,17 +173,35 @@ header h1 {
 }
 
 /* Score-based coloring for markers */
-.marker-high-score {
-    background-color: green;
+.marker-bright-green-score {
+    background-color: #32CD32; /* Bright green for the best scores */
     color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
 }
 
-.marker-medium-score {
-    background-color: yellow;
+.marker-orange-score {
+    background-color: #FFA500; /* Orange for medium scores */
     color: black;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
 }
 
-.marker-low-score {
-    background-color: red;
+.marker-dark-red-score {
+    background-color: #8B0000; /* Dark red for low scores */
     color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+}
+
+.marker-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
 }
