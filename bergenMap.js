@@ -1,3 +1,6 @@
+// Global variable to store crags and their scores
+let cragData = [];
+
 // Load the JSON data
 fetch('crags.json')
     .then(response => response.json())
@@ -5,9 +8,9 @@ fetch('crags.json')
         crags.forEach(crag => {
             // Initially set a default icon
             const customIcon = L.divIcon({
-                className: `marker-icon marker-default`, // Default class until we calculate the score
-                iconSize: [25, 25], // Adjust size as needed
-                iconAnchor: [12, 25] // Adjust anchor to keep the icons centered properly
+                className: `marker-icon marker-default`,
+                iconSize: [25, 25],
+                iconAnchor: [12, 25]
             });
 
             var marker = L.marker([crag.latitude, crag.longitude], { icon: customIcon }).addTo(map);
@@ -15,6 +18,15 @@ fetch('crags.json')
             // Add a click event to open a popup with the crag name and fetch weather data
             marker.on('click', function () {
                 getWeather(crag.latitude, crag.longitude, crag.name, marker);
+            });
+
+            // Store initial data in the cragData array
+            cragData.push({
+                name: crag.name,
+                latitude: crag.latitude,
+                longitude: crag.longitude,
+                marker: marker,
+                score: 0 // Initialize with 0
             });
         });
     })
@@ -122,11 +134,20 @@ function getWeather(lat, lon, cragName, marker) {
                 const customIcon = L.divIcon({
                     className: '',
                     html: iconHtml,
-                    iconSize: [25, 25], // Adjust the size as needed
+                    iconSize: [25, 25],
                     iconAnchor: [12, 25]
                 });
 
                 marker.setIcon(customIcon);
+
+                // Update the cragData array with the new score
+                const cragIndex = cragData.findIndex(c => c.latitude === lat && c.longitude === lon);
+                if (cragIndex !== -1) {
+                    cragData[cragIndex].score = score;
+                }
+
+                // Update the top 5 scores list
+                updateTopScores();
 
                 // Create the popup content with emojis and score
                 const weatherInfo = `
@@ -147,4 +168,19 @@ function getWeather(lat, lon, cragName, marker) {
             console.error('Error fetching weather data:', error);
             marker.bindPopup(`<b>${cragName}</b><br>Weather data not available`).openPopup();
         });
+}
+
+// Function to update the top 5 climbing spots list
+function updateTopScores() {
+    // Sort crags by score in descending order and select the top 5
+    const topCrags = cragData.sort((a, b) => b.score - a.score).slice(0, 5);
+
+    // Update the HTML for the top 5 scores list
+    const topScoresList = document.getElementById('top-scores-list');
+    topScoresList.innerHTML = ''; // Clear existing list
+    topCrags.forEach(crag => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<strong>${crag.name}</strong> - Score: ${crag.score}/10`;
+        topScoresList.appendChild(listItem);
+    });
 }
