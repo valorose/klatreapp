@@ -97,12 +97,11 @@ function getWeather(lat, lon, cragName, marker, crag) {
 
             // Create the popup content with emojis and score
             const weatherInfo = `
-                <b>${cragName}</b><br>
+                <b>${cragName} (Score: ${score}/10)</b><br>
                 ${weatherCondition}<br>
-                🌡️ Temperature: ${temperature}°C <br>
-                💨 Wind Speed: ${windSpeed} m/s <br>
-                💧 Humidity: ${humidity}%<br>
-                🏅 Score: ${score}/10`;
+                🌡️ Temperature: ${temperature.toFixed(1)}°C <br>
+                💨 Wind Speed: ${windSpeed.toFixed(1)} m/s <br>
+                💧 Humidity: ${humidity.toFixed(1)}%`;
 
             // Delay showing the popup to ensure it works on mobile
             setTimeout(() => {
