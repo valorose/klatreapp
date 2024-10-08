@@ -102,6 +102,88 @@ a:hover {
     border: 1px solid #ddd;
 }
 
+/* General styling for popups */
+.leaflet-popup-content-wrapper {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    line-height: 1.6;
+    padding: 10px;
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header and text styling for popups */
+.leaflet-popup-content h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.leaflet-popup-content p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Styling for emoji icons within the popup for better visibility */
+.leaflet-popup-content .emoji {
+    font-size: 1.4em;
+    margin-right: 5px;
+}
+
+/* Popup arrow styling to match overall theme */
+.leaflet-popup-tip {
+    background: #ffffff;
+    border: 1px solid #ddd;
+}
+
+/* Styling for the marker icons to ensure they display correctly */
+.marker-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+/* Score-based coloring for markers */
+.marker-high-score {
+    background-color: #4CAF50 !important; /* Green for high scores */
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-medium-score {
+    background-color: #FF9800 !important; /* Orange for medium scores */
+    color: black;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marker-low-score {
+    background-color: #F44336 !important; /* Red for low scores */
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Mobile-specific styles */
 @media (max-width: 768px) {
     #map {
@@ -170,38 +252,4 @@ header h1 {
 
 .intro-text h2 {
     content: "Oppdag dagens klatreforhold for alle klatrecrags i Bergen med vårt interaktive kart!";
-}
-
-/* Score-based coloring for markers */
-.marker-high-score {
-    background-color: green !important;
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.marker-medium-score {
-    background-color: yellow !important;
-    color: black;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.marker-low-score {
-    background-color: red !important;
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
