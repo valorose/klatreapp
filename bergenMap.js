@@ -8,6 +8,25 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+// Array to store the top 5 crags
+let topScores = [];
+
+// Function to update the top 5 scores list in the HTML
+function updateTopScores() {
+    // Sort the scores in descending order and select the top 5
+    topScores.sort((a, b) => b.score - a.score);
+    const top5 = topScores.slice(0, 5);
+
+    // Update the HTML with the top 5 scores
+    const topScoresList = document.getElementById('top-scores-list');
+    topScoresList.innerHTML = ''; // Clear the previous list
+    top5.forEach(crag => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `${crag.name} - 🏅 Score: ${crag.score}/10`;
+        topScoresList.appendChild(listItem);
+    });
+}
+
 // Load the JSON data
 fetch('crags.json')
     .then(response => response.json())
@@ -152,6 +171,12 @@ function getWeather(lat, lon, cragName, marker) {
                 marker.setIcon(customIcon);
                 marker.openPopup();
             });
+
+            // Add the crag to the topScores array
+            topScores.push({ name: cragName, score: score });
+
+            // Update the top 5 scores list
+            updateTopScores();
 
         } else {
             console.error('No weather data available');
