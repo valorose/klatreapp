@@ -139,17 +139,16 @@ function getWeather(lat, lon, cragName, marker) {
                 💨 Wind Speed: ${windSpeed !== "N/A" ? windSpeed.toFixed(1) : "N/A"} m/s<br>
                 💧 Humidity: ${humidity !== "N/A" ? humidity.toFixed(1) : "N/A"}%`;
 
-            // Log data to help debug
-            console.log('Weather data for:', cragName);
-            console.log('Score:', score);
-            console.log('Weather Info:', weatherInfo);
-
-            // Show the popup
+            // Show the popup only when the data is ready
             marker.bindPopup(weatherInfo).openPopup();
+        } else {
+            console.error('No weather data available');
         }
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
         marker.bindPopup(`<b>${cragName}</b><br>Weather data not available`).openPopup();
     });
+}
+
 }
